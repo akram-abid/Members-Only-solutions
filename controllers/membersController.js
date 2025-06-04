@@ -1,17 +1,16 @@
 const bcrypt = require("bcryptjs");
 const db = require("../db/queries");
+const passport = require("../config/passport") 
 
 exports.displayLoginForm = (req, res) => {
   res.render("login", {});
 };
 
 exports.verifyUser = (req, res) => {
-  console.log(
-    "okay we are going to verfy this ",
-    req.body.username,
-    req.body.password
-  );
-  res.send();
+  passport.authenticate("local", {
+    successRedirect: "/log-in",
+    failureRedirect: "/sign-up",
+  })
 };
 
 exports.displaySignupForm = (req, res) => {
@@ -19,10 +18,11 @@ exports.displaySignupForm = (req, res) => {
 };
 
 exports.storeNewAccount = async (req, res) => {
-  const hashedPassword = bcrypt.hash(req.body.password, 10);
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  console.log(`the password i set ${req.body.password} and the hashed one is ${hashedPassword}`)
   try {
     await db.storeNewMember(
-      req.body.firtname,
+      req.body.firstname,
       req.body.lastname,
       req.body.username,
       hashedPassword
@@ -30,6 +30,5 @@ exports.storeNewAccount = async (req, res) => {
     res.redirect("/log-in");
   } catch (error) {
     console.error(error);
-    next(error);
   }
 };
