@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = db.getUserByUsername(username);
+      const user = await db.getUserByUsername(username);
 
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
