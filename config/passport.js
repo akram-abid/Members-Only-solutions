@@ -22,4 +22,17 @@ passport.use(
   })
 );
 
+passport.serializeUser((user, done) => {
+  done(null, user.username); // Use username instead of id
+});
+
+passport.deserializeUser(async (username, done) => {
+  try {
+    const user = await db.getUserByUsername(username);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+
 module.exports = passport;

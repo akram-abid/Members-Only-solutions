@@ -15,7 +15,17 @@ async function storeNewMember(firstname, lastname, username, password) {
   );
 }
 
+async function checkSession(sid) {
+    const { rows } = await pool.query(
+      "SELECT * FROM sessions WHERE sid = $1", 
+      [sid]
+    );
+    console.log("from the queries ", rows)
+    return rows;
+}
+
 module.exports = {
   getUserByUsername,
-  storeNewMember
+  storeNewMember,
+  checkSession
 };

@@ -6,16 +6,20 @@ const routes = require("./routes/routes")
 const app = express()
 const path = require("node:path");
 const session = require("./config/session")
+const memberController = require("./controllers/membersController")
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session);
+
+app.use(memberController.checkSession);
 
 app.use("/", routes);
 
