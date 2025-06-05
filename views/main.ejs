@@ -135,7 +135,7 @@
                 <div class="post-header">
                   <div class="avatar">😊</div>
                   <div class="post-info">
-                    <h3 class="author-name"><%= post.author || 'Anonymous' %></h3>
+                    <h3 class="author-name"><%= post.firstname + " " + post.lastname || 'Anonymous' %></h3>
                     <div class="post-meta">@<%= post.username || 'anonymous' %> • <%= post.timestamp || 'some time ago' %></div>
                   </div>
                 </div>

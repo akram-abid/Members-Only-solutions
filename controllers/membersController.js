@@ -50,12 +50,22 @@ exports.storeNewAccount = async (req, res) => {
   }
 };
 
-exports.displayTheMainPage = (req, res) => res.render("main", { posts: [] });
+exports.displayTheMainPage = async (req, res) => {
+  const posts = await db.getAllPosts();
+  console.log("okay here is what we got ", posts[0])
+  res.render("main", { posts: posts });
+}
 
-exports.addNewPost = (req, res, next) => {
-  console.log("this is the username i think", req.user.username, req.user.name)
-  console.log("this will it", req.body.title, req.body.content);
-  res.redirect("/posts")
+exports.addNewPost = async (req, res, next) => {
+  const user = await db.getUserByUsername(req.user.username);
+  await db.addNewPost(
+    user.username,
+    user.firstname,
+    user.lastname,
+    req.body.title,
+    req.body.content
+  );
+  res.redirect("/posts");
 };
 
 exports.checkSession = async (req, res, next) => {
