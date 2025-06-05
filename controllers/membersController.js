@@ -147,36 +147,10 @@ exports.logout = (req, res, next) => {
   });
 };
 
-/*exports.logoutUser = async (req, res) => {
-  //try {
-    req.logout((err) => {
-      if (err) {
-        console.log("okay log me out")
-        return next(err);
-      }
-      res.redirect("/");
-    });
-    /*const sessionId = req.sessionID;
-    console.log("Logging out user with session:", sessionId);
-
-    // Optional: Remove session from database if you're storing them
-    // if (sessionId) {
-    //   await db.deleteSession(sessionId);
-    // }
-
-    // Destroy the session
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error destroying session:", err);
-        return res.redirect("/posts");
-      }
-
-      // Clear the session cookie
-      res.clearCookie("connect.sid"); // Default session cookie name
-      console.log("User logged out successfully");
-      res.redirect("/log-in");
-    });
-  } catch (err) {
-    console.error("Logout error:", err);
-    res.redirect("/posts");
-  }*/
+exports.deletePost = (req, res) => {
+  const id = req.params.id;
+  const realId = Number(id.split(':')[1])
+  console.log("i ma deleting now ", realId)
+  db.deletePost(realId)
+  res.redirect("/posts")
+}

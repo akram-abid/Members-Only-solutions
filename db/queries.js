@@ -26,12 +26,17 @@ async function checkSession(sid) {
 async function addNewPost(username, firstname, lastname, title, content) {
   await pool.query(
     "INSERT INTO posts (username, firstname, lastname, title, content) VALUES ($1, $2, $3, $4, $5)",
-  [username, firstname, lastname, title, content]);
+    [username, firstname, lastname, title, content]
+  );
 }
 
-async function getAllPosts(){
+async function getAllPosts() {
   const { rows } = await pool.query("SELECT * FROM posts");
   return rows;
+}
+
+async function deletePost(id) {
+  await pool.query("delete FROM posts where post_id = $1", [id]);
 }
 
 module.exports = {
@@ -39,5 +44,6 @@ module.exports = {
   storeNewMember,
   checkSession,
   addNewPost,
-  getAllPosts
+  getAllPosts,
+  deletePost
 };
