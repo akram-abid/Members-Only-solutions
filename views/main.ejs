@@ -5,103 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Members Only</title>
     <link rel="stylesheet" href="/styles/main.css">
-    <style>
-      /* Additional styles for scrollable layout */
-      body {
-        height: 100vh;
-        overflow: hidden;
-      }
-
-      .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-      }
-
-      .main-content {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        padding-top: 90px; /* Space for fixed header */
-      }
-
-      .button-section {
-        padding: 2rem;
-        text-align: center;
-        position: relative;
-        z-index: 5;
-        flex-shrink: 0;
-      }
-
-      .container {
-        flex: 1;
-        overflow-y: auto;
-        padding: 0 2rem 2rem;
-        max-width: 800px;
-        margin: 0 auto;
-        width: 100%;
-      }
-
-      .posts-container {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-      }
-
-      /* Custom scrollbar */
-      .container::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .container::-webkit-scrollbar-track {
-        background: rgba(30, 144, 255, 0.1);
-        border-radius: 10px;
-      }
-
-      .container::-webkit-scrollbar-thumb {
-        background: rgba(135, 206, 235, 0.5);
-        border-radius: 10px;
-      }
-
-      .container::-webkit-scrollbar-thumb:hover {
-        background: rgba(135, 206, 235, 0.7);
-      }
-
-      .post {
-        flex-shrink: 0;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        .main-content {
-          padding-top: 120px;
-        }
-
-        .button-section {
-          padding: 1rem;
-        }
-
-        .container {
-          padding: 0 1rem 1rem;
-        }
-
-        .posts-container {
-          gap: 1.5rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .container {
-          padding: 0 0.5rem 0.5rem;
-        }
-
-        .posts-container {
-          gap: 1rem;
-        }
-      }
-    </style>
   </head>
   <body>
     <header class="header">
@@ -160,7 +63,6 @@
       </div>
     </div>
 
-    <!-- Modal for adding new secret -->
     <div id="secretModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -244,7 +146,6 @@
 
         addPostHoverEffects();
 
-        // Profile hover effect
         const profileImg = document.querySelector(".profile-img");
         if (profileImg) {
           profileImg.addEventListener("mouseenter", function () {
@@ -256,7 +157,6 @@
           });
         }
 
-        // Re-apply hover effects when new posts are added
         const observer = new MutationObserver(function (mutations) {
           mutations.forEach(function (mutation) {
             if (mutation.type === "childList") {
