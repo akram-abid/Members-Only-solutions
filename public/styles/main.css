@@ -14,7 +14,7 @@ body {
     #1e88e5 75%,
     #0d47a1 100%
   );*/
-background-image: url(/assets/wallpaperflare.com_wallpaper\ \(7\).jpg);
+  background-image: url(/assets/wallpaperflare.com_wallpaper.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -229,6 +229,13 @@ body::before {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 15px 50px rgba(30, 144, 255, 0.2);
   border-color: rgba(135, 206, 235, 0.4);
+}
+
+.post-inf {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .post-header {
@@ -521,11 +528,30 @@ body {
 }
 
 .button-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
   padding: 2rem;
   text-align: center;
   position: relative;
   z-index: 5;
   flex-shrink: 0;
+  height: 100%;
+}
+
+.logout {
+  background: linear-gradient(45deg, #e51e49, #ab3939);
+  border: none;
+  border-radius: 25px;
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .container {
@@ -542,7 +568,6 @@ body {
   flex-direction: column;
   gap: 2rem;
 }
-
 
 .container::-webkit-scrollbar {
   width: 8px;

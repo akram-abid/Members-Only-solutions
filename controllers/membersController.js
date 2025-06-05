@@ -52,8 +52,7 @@ exports.storeNewAccount = async (req, res) => {
 
 exports.displayTheMainPage = async (req, res) => {
   const posts = await db.getAllPosts();
-  console.log("okay here is what we got ", posts[0])
-  res.render("main", { posts: posts });
+  res.render("main", { posts: posts , username: req.user.username});
 }
 
 exports.addNewPost = async (req, res, next) => {
