@@ -49,8 +49,8 @@
                 </div>
               </div>
               <%if(username == post.username){%>
-              <div>
-                <p><a href="/delete-post:<%=post.post_id%>">delete ❌</a></p>
+              <div class="delete-post">
+                <p><a href="/delete-post:<%=post.post_id%>">Delete</a></p>
               </div>
               <%}%>
             </div>

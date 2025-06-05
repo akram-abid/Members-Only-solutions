@@ -72,7 +72,7 @@ body::before {
   left: 0;
   right: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.192);
 }
 
 .logo {
@@ -196,7 +196,10 @@ body::before {
   backdrop-filter: blur(15px);
   border: 1px solid rgba(135, 206, 235, 0.2);
   border-radius: 20px;
-  padding: 2rem;
+  padding: 12px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   transition: all 0.4s ease;
   animation: fadeInUp 0.8s ease forwards;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -241,8 +244,7 @@ body::before {
 .post-header {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
-  margin-bottom: 1.5rem;
+  gap: 22px;
 }
 
 .avatar {
@@ -269,6 +271,17 @@ body::before {
   font-weight: 600;
 }
 
+.delete-post {
+    color: white;
+    
+}
+
+.delete-post > p> a {
+    font-weight: 600;
+    text-decoration: none;
+    color: rgba(255, 0, 0, 0.726);
+}
+
 .post-meta {
   color: #b0c4de;
   font-size: 0.9rem;
@@ -278,7 +291,6 @@ body::before {
 .post-title {
   font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 1rem;
   color: #ffffff;
   transition: color 0.3s ease;
 }
@@ -432,7 +444,6 @@ body::before {
   }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .header {
     padding: 1rem;
