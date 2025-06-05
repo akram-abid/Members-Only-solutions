@@ -10,6 +10,7 @@ routes.post("/log-in", membersController.verifyUser)
 routes.get("/sign-up", membersController.displaySignupForm)
 routes.post("/sign-up", membersController.storeNewAccount)
 routes.get("/posts", membersController.displayTheMainPage);
+routes.post("/posts", membersController.addNewPost)
 routes.get("/log-out", membersController.logout);
 
 

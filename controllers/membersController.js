@@ -50,21 +50,29 @@ exports.storeNewAccount = async (req, res) => {
   }
 };
 
-exports.displayTheMainPage = (req, res) => res.render("main", {posts: []})
+exports.displayTheMainPage = (req, res) => res.render("main", { posts: [] });
+
+exports.addNewPost = (req, res, next) => {
+  console.log("this is the username i think", req.user.username, req.user.name)
+  console.log("this will it", req.body.title, req.body.content);
+  res.redirect("/posts")
+};
 
 exports.checkSession = async (req, res, next) => {
   try {
     const publicRoutes = ["/log-in", "/sign-up"];
-    console.log("here is the path of yours ", req.path)
+    console.log("here is the path of yours ", req.path);
     if (publicRoutes.includes(req.path)) {
-      if("its / then i not supposed to be here")
-      return next();
+      if ("its / then i not supposed to be here") return next();
     }
 
     const sessionId = req.sessionID;
 
     if (req.path === "/") {
-      console.log("this is the session id you have been looking for ", sessionId)
+      console.log(
+        "this is the session id you have been looking for ",
+        sessionId
+      );
       if (sessionId) {
         const rows = await db.checkSession(sessionId);
         if (rows.length > 0) {
@@ -101,20 +109,20 @@ exports.checkSession = async (req, res, next) => {
 // In membersController.js
 exports.logout = (req, res, next) => {
   const sessionId = req.sessionID; // Get the session ID before destroying
-  
+
   req.logout((err) => {
     if (err) {
       return next(err);
     }
-    
+
     req.session.destroy((err) => {
       if (err) {
         return next(err);
       }
-      
+
       // Clear the session cookie
-      res.clearCookie('connect.sid');
-      
+      res.clearCookie("connect.sid");
+
       // Optional: Manually delete from database (connect-pg-simple should handle this automatically)
       // But if you want to be explicit:
       /*
@@ -123,9 +131,9 @@ exports.logout = (req, res, next) => {
         if (err) console.error('Error deleting session from DB:', err);
       });
       */
-      
-      res.redirect('/log-in'); // Redirect to login page
-      console.log('i redirected the user to log in again')
+
+      res.redirect("/log-in"); // Redirect to login page
+      console.log("i redirected the user to log in again");
     });
   });
 };

@@ -1,10 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/styles/main.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Members Only</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+      /* Additional styles for scrollable layout */
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      }
+
+      .main-content {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding-top: 90px; /* Space for fixed header */
+      }
+
+      .button-section {
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        z-index: 5;
+        flex-shrink: 0;
+      }
+
+      .container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 2rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .posts-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Custom scrollbar */
+      .container::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .container::-webkit-scrollbar-track {
+        background: rgba(30, 144, 255, 0.1);
+        border-radius: 10px;
+      }
+
+      .container::-webkit-scrollbar-thumb {
+        background: rgba(135, 206, 235, 0.5);
+        border-radius: 10px;
+      }
+
+      .container::-webkit-scrollbar-thumb:hover {
+        background: rgba(135, 206, 235, 0.7);
+      }
+
+      .post {
+        flex-shrink: 0;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .main-content {
+          padding-top: 120px;
+        }
+
+        .button-section {
+          padding: 1rem;
+        }
+
+        .container {
+          padding: 0 1rem 1rem;
+        }
+
+        .posts-container {
+          gap: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 0.5rem 0.5rem;
+        }
+
+        .posts-container {
+          gap: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -30,79 +127,36 @@
         </button>
       </div>
 
-      <div class="posts-container" id="postsContainer">
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">😊</div>
-            <div class="post-info">
-              <h3 class="author-name">John Snow</h3>
-              <div class="post-meta">@johnsnow • 2 days ago</div>
+      <div class="container" id="scrollContainer">
+        <div class="posts-container" id="postsContainer">
+          <% if (posts && posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
+              <article class="post">
+                <div class="post-header">
+                  <div class="avatar">😊</div>
+                  <div class="post-info">
+                    <h3 class="author-name"><%= post.author || 'Anonymous' %></h3>
+                    <div class="post-meta">@<%= post.username || 'anonymous' %> • <%= post.timestamp || 'some time ago' %></div>
+                  </div>
+                </div>
+                <h2 class="post-title"><%= post.title || 'No title' %></h2>
+                <p class="post-content"><%= post.content || 'No content' %></p>
+              </article>
+            <% }); %>
+          <% } else { %>
+            <div class="post" style="text-align: center; opacity: 0.7;">
+              <div class="post-header">
+                <div class="avatar">🤔</div>
+                <div class="post-info">
+                  <h3 class="author-name">Welcome!</h3>
+                  <div class="post-meta">@system • now</div>
+                </div>
+              </div>
+              <h2 class="post-title">No secrets yet</h2>
+              <p class="post-content">Be the first to share a secret! Click the button above to get started.</p>
             </div>
-          </div>
-          <h2 class="post-title">winter is coming</h2>
-          <p class="post-content">i know nothing</p>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">😊</div>
-            <div class="post-info">
-              <h3 class="author-name">Test User</h3>
-              <div class="post-meta">@testuser • 2 days ago</div>
-            </div>
-          </div>
-          <h2 class="post-title">just trying the website</h2>
-          <p class="post-content">and this was my try</p>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">😊</div>
-            <div class="post-info">
-              <h3 class="author-name">Anonymous</h3>
-              <div class="post-meta">@anonymous • 3 days ago</div>
-            </div>
-          </div>
-          <h2 class="post-title">No title</h2>
-          <p class="post-content">No content😊😊😊😊</p>
-        </article>
-
-        <!-- Extra posts to demonstrate scrolling -->
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">🌟</div>
-            <div class="post-info">
-              <h3 class="author-name">Star Gazer</h3>
-              <div class="post-meta">@stargazer • 4 days ago</div>
-            </div>
-          </div>
-          <h2 class="post-title">Looking at the stars</h2>
-          <p class="post-content">Sometimes I wonder if anyone out there is looking back at us</p>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">🎨</div>
-            <div class="post-info">
-              <h3 class="author-name">Creative Soul</h3>
-              <div class="post-meta">@creative • 5 days ago</div>
-            </div>
-          </div>
-          <h2 class="post-title">Art is life</h2>
-          <p class="post-content">I've been painting in secret for years, and nobody knows about my hidden talent</p>
-        </article>
-
-        <article class="post">
-          <div class="post-header">
-            <div class="avatar">🌙</div>
-            <div class="post-info">
-              <h3 class="author-name">Night Owl</h3>
-              <div class="post-meta">@nightowl • 1 week ago</div>
-            </div>
-          </div>
-          <h2 class="post-title">Midnight thoughts</h2>
-          <p class="post-content">The best ideas always come to me at 3 AM when the world is quiet</p>
-        </article>
+          <% } %>
+        </div>
       </div>
     </div>
 
@@ -111,31 +165,13 @@
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <h2>🤫 Share Your Secret</h2>
-        <form id="secretForm">
-          <div class="form-group">
-            <label for="authorName">Your Name:</label>
-            <input
-              type="text"
-              id="authorName"
-              name="authorName"
-              placeholder="Enter your name (or stay anonymous)"
-            />
-          </div>
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="@username"
-            />
-          </div>
+        <form id="secretForm" action="/posts" method="POST">
           <div class="form-group">
             <label for="secretTitle">Secret Title:</label>
             <input
               type="text"
               id="secretTitle"
-              name="secretTitle"
+              name="title"
               placeholder="What's your secret about?"
               required
             />
@@ -144,7 +180,7 @@
             <label for="secretContent">Your Secret:</label>
             <textarea
               id="secretContent"
-              name="secretContent"
+              name="content"
               placeholder="Share your secret here..."
               required
             ></textarea>
@@ -154,14 +190,33 @@
       </div>
     </div>
 
+    <footer class="footer" style="position: relative; z-index: 10;">
+      <div class="footer-content">
+        <a
+          href="https://github.com/akram-abid"
+          target="_blank"
+          class="github-link"
+        >
+          <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+            />
+          </svg>
+          <span>akram-abid</span>
+        </a>
+      </div>
+    </footer>
+
     <script>
       // Modal functionality
       function openModal() {
         document.getElementById("secretModal").style.display = "block";
+        document.body.style.overflow = "hidden";
       }
 
       function closeModal() {
         document.getElementById("secretModal").style.display = "none";
+        document.body.style.overflow = "auto";
       }
 
       // Close modal when clicking outside
@@ -172,59 +227,6 @@
         }
       };
 
-      // Handle form submission
-      document
-        .getElementById("secretForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const authorName =
-            document.getElementById("authorName").value || "Anonymous";
-          const username =
-            document.getElementById("username").value || "anonymous";
-          const secretTitle = document.getElementById("secretTitle").value;
-          const secretContent = document.getElementById("secretContent").value;
-
-          // Create new post element
-          const newPost = document.createElement("article");
-          newPost.className = "post";
-          newPost.style.animationDelay = "0s";
-
-          newPost.innerHTML = `
-                <div class="post-header">
-                    <div class="avatar">🆕</div>
-                    <div class="post-info">
-                        <h3 class="author-name">${authorName}</h3>
-                        <div class="post-meta">@${username} • just now</div>
-                    </div>
-                </div>
-                <h2 class="post-title">${secretTitle}</h2>
-                <p class="post-content">${secretContent}</p>
-            `;
-
-          // Add to the beginning of posts container
-          const postsContainer = document.getElementById("postsContainer");
-          postsContainer.insertBefore(newPost, postsContainer.firstChild);
-
-          // Reset form and close modal
-          document.getElementById("secretForm").reset();
-          closeModal();
-
-          // Show success message
-          const originalText =
-            document.querySelector(".add-secret-btn").textContent;
-          document.querySelector(".add-secret-btn").textContent =
-            "✅ Secret Shared!";
-          setTimeout(() => {
-            document.querySelector(".add-secret-btn").textContent =
-              originalText;
-          }, 2000);
-
-          // Scroll to top of posts container to show new post
-          postsContainer.scrollTop = 0;
-        });
-
-      // Existing interactive features
       document.addEventListener("DOMContentLoaded", function () {
         // Add hover effect to posts
         function addPostHoverEffects() {
