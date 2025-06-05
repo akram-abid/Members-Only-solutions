@@ -23,7 +23,7 @@ exports.verifyUser = (req, res, next) => {
       }
       console.log(`User ${user.username} logged in successfully`);
 
-      return res.redirect("/success");
+      return res.redirect("/posts");
     });
   })(req, res, next);
 };
@@ -50,6 +50,8 @@ exports.storeNewAccount = async (req, res) => {
   }
 };
 
+exports.displayTheMainPage = (req, res) => res.render("main", {posts: []})
+
 exports.checkSession = async (req, res, next) => {
   try {
     const publicRoutes = ["/log-in", "/sign-up"];
@@ -59,8 +61,9 @@ exports.checkSession = async (req, res, next) => {
       return next();
     }
 
+    const sessionId = req.sessionID;
+
     if (req.path === "/") {
-      const sessionId = req.sessionID;
       console.log("this is the session id you have been looking for ", sessionId)
       if (sessionId) {
         const rows = await db.checkSession(sessionId);

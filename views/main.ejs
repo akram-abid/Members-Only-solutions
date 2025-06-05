@@ -1,12 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="/styles/main.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>secrets</title>
+    <title>Members Only</title>
   </head>
   <body>
-    <h1>here is the secrets</h1>
-    <a href="/log-out">LOG OUT</a>
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">🔐</span>
+        <span>Members Only</span>
+      </div>
+      <div class="profile-section">
+        <div class="profile-avatar">
+          <img
+            src="/assets/1000024172.jpg"
+            alt="Profile"
+            class="profile-img"
+          />
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="button-section">
+        <button class="add-secret-btn" onclick="openModal()">
+          ✨ Share a New Secret
+        </button>
+      </div>
+
+      <div class="posts-container" id="postsContainer">
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">😊</div>
+            <div class="post-info">
+              <h3 class="author-name">John Snow</h3>
+              <div class="post-meta">@johnsnow • 2 days ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">winter is coming</h2>
+          <p class="post-content">i know nothing</p>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">😊</div>
+            <div class="post-info">
+              <h3 class="author-name">Test User</h3>
+              <div class="post-meta">@testuser • 2 days ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">just trying the website</h2>
+          <p class="post-content">and this was my try</p>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">😊</div>
+            <div class="post-info">
+              <h3 class="author-name">Anonymous</h3>
+              <div class="post-meta">@anonymous • 3 days ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">No title</h2>
+          <p class="post-content">No content😊😊😊😊</p>
+        </article>
+
+        <!-- Extra posts to demonstrate scrolling -->
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">🌟</div>
+            <div class="post-info">
+              <h3 class="author-name">Star Gazer</h3>
+              <div class="post-meta">@stargazer • 4 days ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">Looking at the stars</h2>
+          <p class="post-content">Sometimes I wonder if anyone out there is looking back at us</p>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">🎨</div>
+            <div class="post-info">
+              <h3 class="author-name">Creative Soul</h3>
+              <div class="post-meta">@creative • 5 days ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">Art is life</h2>
+          <p class="post-content">I've been painting in secret for years, and nobody knows about my hidden talent</p>
+        </article>
+
+        <article class="post">
+          <div class="post-header">
+            <div class="avatar">🌙</div>
+            <div class="post-info">
+              <h3 class="author-name">Night Owl</h3>
+              <div class="post-meta">@nightowl • 1 week ago</div>
+            </div>
+          </div>
+          <h2 class="post-title">Midnight thoughts</h2>
+          <p class="post-content">The best ideas always come to me at 3 AM when the world is quiet</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- Modal for adding new secret -->
+    <div id="secretModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>🤫 Share Your Secret</h2>
+        <form id="secretForm">
+          <div class="form-group">
+            <label for="authorName">Your Name:</label>
+            <input
+              type="text"
+              id="authorName"
+              name="authorName"
+              placeholder="Enter your name (or stay anonymous)"
+            />
+          </div>
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="@username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="secretTitle">Secret Title:</label>
+            <input
+              type="text"
+              id="secretTitle"
+              name="secretTitle"
+              placeholder="What's your secret about?"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="secretContent">Your Secret:</label>
+            <textarea
+              id="secretContent"
+              name="secretContent"
+              placeholder="Share your secret here..."
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="submit-btn">🔐 Share Secret</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Modal functionality
+      function openModal() {
+        document.getElementById("secretModal").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("secretModal").style.display = "none";
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("secretModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      // Handle form submission
+      document
+        .getElementById("secretForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const authorName =
+            document.getElementById("authorName").value || "Anonymous";
+          const username =
+            document.getElementById("username").value || "anonymous";
+          const secretTitle = document.getElementById("secretTitle").value;
+          const secretContent = document.getElementById("secretContent").value;
+
+          // Create new post element
+          const newPost = document.createElement("article");
+          newPost.className = "post";
+          newPost.style.animationDelay = "0s";
+
+          newPost.innerHTML = `
+                <div class="post-header">
+                    <div class="avatar">🆕</div>
+                    <div class="post-info">
+                        <h3 class="author-name">${authorName}</h3>
+                        <div class="post-meta">@${username} • just now</div>
+                    </div>
+                </div>
+                <h2 class="post-title">${secretTitle}</h2>
+                <p class="post-content">${secretContent}</p>
+            `;
+
+          // Add to the beginning of posts container
+          const postsContainer = document.getElementById("postsContainer");
+          postsContainer.insertBefore(newPost, postsContainer.firstChild);
+
+          // Reset form and close modal
+          document.getElementById("secretForm").reset();
+          closeModal();
+
+          // Show success message
+          const originalText =
+            document.querySelector(".add-secret-btn").textContent;
+          document.querySelector(".add-secret-btn").textContent =
+            "✅ Secret Shared!";
+          setTimeout(() => {
+            document.querySelector(".add-secret-btn").textContent =
+              originalText;
+          }, 2000);
+
+          // Scroll to top of posts container to show new post
+          postsContainer.scrollTop = 0;
+        });
+
+      // Existing interactive features
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add hover effect to posts
+        function addPostHoverEffects() {
+          const posts = document.querySelectorAll(".post");
+          posts.forEach((post) => {
+            post.addEventListener("mouseenter", function () {
+              this.style.background = "rgba(30, 144, 255, 0.15)";
+            });
+
+            post.addEventListener("mouseleave", function () {
+              this.style.background = "rgba(30, 144, 255, 0.08)";
+            });
+          });
+        }
+
+        addPostHoverEffects();
+
+        // Profile hover effect
+        const profileImg = document.querySelector(".profile-img");
+        if (profileImg) {
+          profileImg.addEventListener("mouseenter", function () {
+            this.style.transform = "scale(1.1)";
+          });
+
+          profileImg.addEventListener("mouseleave", function () {
+            this.style.transform = "scale(1)";
+          });
+        }
+
+        // Re-apply hover effects when new posts are added
+        const observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            if (mutation.type === "childList") {
+              addPostHoverEffects();
+            }
+          });
+        });
+
+        observer.observe(document.getElementById("postsContainer"), {
+          childList: true,
+        });
+      });
+    </script>
   </body>
 </html>

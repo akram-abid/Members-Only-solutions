@@ -9,7 +9,7 @@ routes.get("/log-in", membersController.displayLoginForm)
 routes.post("/log-in", membersController.verifyUser)
 routes.get("/sign-up", membersController.displaySignupForm)
 routes.post("/sign-up", membersController.storeNewAccount)
-routes.get("/posts", (req, res) => res.render("main", {}));
+routes.get("/posts", membersController.displayTheMainPage);
 routes.get("/log-out", membersController.logout);
 
 
