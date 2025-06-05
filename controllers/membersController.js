@@ -34,7 +34,9 @@ exports.displaySignupForm = (req, res) => {
 
 exports.storeNewAccount = async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
-  console.log(`the password i set ${req.body.password} and the hashed one is ${hashedPassword}`);
+  console.log(
+    `the password i set ${req.body.password} and the hashed one is ${hashedPassword}`
+  );
   try {
     await db.storeNewMember(
       req.body.firstname,
@@ -50,10 +52,16 @@ exports.storeNewAccount = async (req, res) => {
 
 exports.checkSession = async (req, res, next) => {
   try {
-    // Handle root route differently
-    if (req.path === '/') {
+    const publicRoutes = ["/log-in", "/sign-up"];
+    console.log("here is the path of yours ", req.path)
+    if (publicRoutes.includes(req.path)) {
+      if("its / then i not supposed to be here")
+      return next();
+    }
+
+    if (req.path === "/") {
       const sessionId = req.sessionID;
-      
+      console.log("this is the session id you have been looking for ", sessionId)
       if (sessionId) {
         const rows = await db.checkSession(sessionId);
         if (rows.length > 0) {
@@ -61,20 +69,13 @@ exports.checkSession = async (req, res, next) => {
           return res.redirect("/posts"); // User is logged in, go to posts
         }
       }
-      
+
       console.log("User not authenticated, redirecting to login");
       return res.redirect("/log-in"); // No valid session, go to login
     }
 
     // Skip authentication for other public routes
-    const publicRoutes = ['/log-in', '/sign-up', '/signup', '/login'];
-    if (publicRoutes.includes(req.path)) {
-      return next();
-    }
 
-    // For protected routes, check session
-    const sessionId = req.sessionID;
-    
     if (!sessionId) {
       console.log("No session ID found for protected route");
       return res.redirect("/log-in");
@@ -88,9 +89,74 @@ exports.checkSession = async (req, res, next) => {
       console.log("Invalid session for protected route");
       return res.redirect("/log-in");
     }
-    
   } catch (err) {
     console.error("Session check error:", err);
     return res.redirect("/log-in");
   }
 };
+
+// In membersController.js
+exports.logout = (req, res, next) => {
+  const sessionId = req.sessionID; // Get the session ID before destroying
+  
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    
+    req.session.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      
+      // Clear the session cookie
+      res.clearCookie('connect.sid');
+      
+      // Optional: Manually delete from database (connect-pg-simple should handle this automatically)
+      // But if you want to be explicit:
+      /*
+      const pool = require('../db/pool'); // Your database pool
+      pool.query('DELETE FROM sessions WHERE sid = $1', [sessionId], (err) => {
+        if (err) console.error('Error deleting session from DB:', err);
+      });
+      */
+      
+      res.redirect('/log-in'); // Redirect to login page
+      console.log('i redirected the user to log in again')
+    });
+  });
+};
+
+/*exports.logoutUser = async (req, res) => {
+  //try {
+    req.logout((err) => {
+      if (err) {
+        console.log("okay log me out")
+        return next(err);
+      }
+      res.redirect("/");
+    });
+    /*const sessionId = req.sessionID;
+    console.log("Logging out user with session:", sessionId);
+
+    // Optional: Remove session from database if you're storing them
+    // if (sessionId) {
+    //   await db.deleteSession(sessionId);
+    // }
+
+    // Destroy the session
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        return res.redirect("/posts");
+      }
+
+      // Clear the session cookie
+      res.clearCookie("connect.sid"); // Default session cookie name
+      console.log("User logged out successfully");
+      res.redirect("/log-in");
+    });
+  } catch (err) {
+    console.error("Logout error:", err);
+    res.redirect("/posts");
+  }*/

@@ -9,8 +9,8 @@ routes.get("/log-in", membersController.displayLoginForm)
 routes.post("/log-in", membersController.verifyUser)
 routes.get("/sign-up", membersController.displaySignupForm)
 routes.post("/sign-up", membersController.storeNewAccount)
-routes.get("/posts", (req, res) => {
-    res.send("<h1>Posts</h1>")
-});
+routes.get("/posts", (req, res) => res.render("main", {}));
+routes.get("/log-out", membersController.logout);
+
 
 module.exports = routes

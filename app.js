@@ -7,22 +7,23 @@ const app = express()
 const path = require("node:path");
 const session = require("./config/session")
 const memberController = require("./controllers/membersController")
+const passport = require("./config/passport")
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 
-
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
+// Session middleware MUST come before Passport
 app.use(session);
-
-app.use(memberController.checkSession);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: true }))
+app.use(memberController.checkSession);   
 
 app.use("/", routes);
-
 app.listen(3000, () => {
-    console.log("app litenning on port 3000")
+    console.log("app listening on port 3000")
 })

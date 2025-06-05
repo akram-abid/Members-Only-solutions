@@ -9,7 +9,7 @@ const session = expressSession({
   }),
   secret: "some secret",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
 });
 
