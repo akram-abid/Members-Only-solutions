@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node populate.js app.js"
+    "start": "node db/populate.js app.js"
   },
   "author": "",
   "license": "ISC",
