@@ -46,7 +46,7 @@ exports.storeNewAccount = async (req, res) => {
     );
     res.redirect("/log-in");
   } catch (error) {
-    console.error(error);
+    console.error("this is the error i have been telling you ",error);
   }
 };
 
