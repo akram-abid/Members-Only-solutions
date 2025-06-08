@@ -64,6 +64,8 @@ CREATE INDEX IDX_sessions_expire ON public.sessions(expire);`
   const client = new Client({
     connectionString: process.env.DATABASE_URL + "?sslmode=require",
   })
+
+  console.log("here is the client ", client)
   
   try {
     await client.connect();
