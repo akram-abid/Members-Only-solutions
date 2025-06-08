@@ -15,11 +15,11 @@ async function createDatabase() {
     );
     
     if (result.rows.length === 0) {
-      console.log("Creating database inventory_app...");
-      await client.query("CREATE DATABASE inventory_app");
+      console.log("Creating database onlymembers...");
+      await client.query("CREATE DATABASE onlymembers");
       console.log("Database created successfully");
     } else {
-      console.log("Database inventory_app already exists");
+      console.log("Database onlymembers already exists");
     }
     
     await client.end();

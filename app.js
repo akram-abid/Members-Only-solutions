@@ -21,6 +21,12 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }))
+app.use(async (req, res) => {
+    const result = await client.query(
+      "SELECT 1 FROM pg_database WHERE datname = 'onlymembers'"
+    );
+    console.log("okay this is it the database ", result)
+})
 app.use(memberController.checkSession);   
 
 app.use("/", routes);
