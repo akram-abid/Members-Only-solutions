@@ -279,7 +279,7 @@ body::before {
 .delete-post > p> a {
     font-weight: 600;
     text-decoration: none;
-    color: rgba(255, 0, 0, 0.726);
+    color: rgba(241, 11, 61, 0.726);
 }
 
 .post-meta {
