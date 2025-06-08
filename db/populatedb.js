@@ -38,7 +38,7 @@ async function createDatabase() {
 async function seedDatabase() {
   const SQL = `
 CREATE TABLE IF NOT EXISTS members (
-    username  VARCHAR(30) NOT NULL,
+    username  VARCHAR(30) NOT NULL PRIMARY KEY,
     firstname VARCHAR(30),
     lastname  VARCHAR(30),
     password  TEXT
@@ -95,3 +95,5 @@ async function main() {
 }
 
 main();
+
+
