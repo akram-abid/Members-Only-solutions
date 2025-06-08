@@ -4,9 +4,12 @@ const { Client } = require("pg");
 console.log("this is the script i want to run")
 
 async function createDatabase() {
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL + "?sslmode=require",
-  });
+const client = new Client({
+  connectionString: process.env.DATABASE_URL + "?sslmode=require",
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
   
   try {
     await client.connect();
