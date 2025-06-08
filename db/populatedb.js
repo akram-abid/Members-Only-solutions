@@ -1,26 +1,23 @@
 #! /usr/bin/env node
 const { Client } = require("pg");
 
-console.log("this is the script i want to run")
+console.log("this is the script i want to run");
 
 async function createDatabase() {
-const client = new Client({
-  connectionString: process.env.DATABASE_URL + "?sslmode=require",
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+  });
 
-console.log("i got here !! ")
-  
+  console.log("i got here !! ");
+
   try {
     await client.connect();
-    
+
     // Check if database exists
     const result = await client.query(
       "SELECT 1 FROM pg_database WHERE datname = 'onlymembers'"
     );
-    
+
     if (result.rows.length === 0) {
       console.log("Creating database onlymembers...");
       await client.query("CREATE DATABASE onlymembers");
@@ -28,7 +25,7 @@ console.log("i got here !! ")
     } else {
       console.log("Database onlymembers already exists");
     }
-    
+
     await client.end();
   } catch (error) {
     console.error("Error creating database:", error);
@@ -65,15 +62,15 @@ CREATE TABLE IF NOT EXISTS sessions (
     CONSTRAINT sessions_pkey PRIMARY KEY (sid)
 );
 
-CREATE INDEX IDX_sessions_expire ON sessions(expire);`
+CREATE INDEX IDX_sessions_expire ON sessions(expire);`;
 
   console.log("Creating tables and seeding data...");
   const client = new Client({
-    connectionString: process.env.DATABASE_URL + "?sslmode=require",
-  })
+    connectionString: process.env.DATABASE_URL,
+  });
 
-  console.log("here is the client ", client)
-  
+  console.log("here is the client ", client);
+
   try {
     await client.connect();
     await client.query(SQL);
@@ -98,4 +95,3 @@ async function main() {
 }
 
 main();
-
