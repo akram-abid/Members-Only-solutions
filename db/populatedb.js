@@ -10,6 +10,8 @@ const client = new Client({
     rejectUnauthorized: false
   }
 });
+
+console.log("i got here !! ")
   
   try {
     await client.connect();
