@@ -33,7 +33,7 @@ async function createDatabase() {
 // Your existing seeding function
 async function seedDatabase() {
   const SQL = `
-CREATE TABLE public.members (
+CREATE TABLE IF NOT EXISTS members (
     username  VARCHAR(30) NOT NULL,
     firstname VARCHAR(30),
     lastname  VARCHAR(30),
@@ -41,7 +41,7 @@ CREATE TABLE public.members (
 );
 
 
-CREATE TABLE public.posts (
+CREATE TABLE IF NOT EXISTS posts (
     post_id   INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     username  VARCHAR(20),
     firstname VARCHAR(20),
@@ -51,14 +51,14 @@ CREATE TABLE public.posts (
     CONSTRAINT posts_username_fkey FOREIGN KEY (username) REFERENCES public.members(username)
 );
 
-CREATE TABLE public.sessions (
+CREATE TABLE IF NOT EXISTS sessions (
     sid     VARCHAR NOT NULL,
     sess    JSON NOT NULL,
     expire  TIMESTAMP(6) WITHOUT TIME ZONE NOT NULL,
     CONSTRAINT sessions_pkey PRIMARY KEY (sid)
 );
 
-CREATE INDEX IDX_sessions_expire ON public.sessions(expire);`
+CREATE INDEX IDX_sessions_expire ON sessions(expire);`
 
   console.log("Creating tables and seeding data...");
   const client = new Client({
