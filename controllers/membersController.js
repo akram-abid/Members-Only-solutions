@@ -68,6 +68,7 @@ exports.addNewPost = async (req, res, next) => {
 };
 
 exports.checkSession = async (req, res, next) => {
+  console.log("the connection string is this ", process.env.DATABASE_URL )
   try {
     const publicRoutes = ["/log-in", "/sign-up"];
     console.log("here is the path of yours ", req.path);
